@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zainab Study Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#f472b6;--pink-mid:#ec4899;--pink-lt:#fce7f3;
+  --pink-dim:#fbcfe8;--offwhite:#fdf2f8;
+  --text:#1a0a14;--muted:#9d6b8a;--border:rgba(244,114,182,0.2);
+  --shadow:0 4px 30px rgba(244,114,182,0.10);
+}
+body{min-height:100vh;background:var(--offwhite);font-family:'Jost',sans-serif;color:var(--text);}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background-image:radial-gradient(circle,rgba(244,114,182,0.18) 1px,transparent 1px);
+  background-size:28px 28px;pointer-events:none;}
+body::after{content:'';position:fixed;top:0;left:0;right:0;height:4px;z-index:100;
+  background:linear-gradient(90deg,#f9a8d4,#ec4899,#f472b6,#fbcfe8,#ec4899);
+  background-size:300% 100%;animation:shineBar 4s linear infinite;}
+@keyframes shineBar{to{background-position:300% 0}}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:52px 16px 80px;}
+header{text-align:center;margin-bottom:44px;animation:fadeUp 0.8s ease both;}
+.header-icon{display:inline-flex;align-items:center;justify-content:center;
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,#fce7f3,#fbcfe8);
+  border:2px solid var(--pink-dim);font-size:2rem;margin-bottom:18px;
+  box-shadow:0 8px 24px rgba(244,114,182,0.2);}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,7vw,3rem);font-weight:700;color:var(--text);line-height:1.1;}
+header h1 em{font-style:italic;color:var(--pink-mid);}
+.tagline{margin-top:8px;font-size:0.73rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.stat-box{background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 10px;text-align:center;box-shadow:var(--shadow);}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--pink-mid);line-height:1;}
+.stat-lbl{font-size:0.67rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow);}
+.card-label{font-size:0.7rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--pink-mid);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+/* ── EXAM SCHEDULE CARDS ── */
+.exam-grid{display:flex;flex-direction:column;gap:10px;}
+.exam-card{display:flex;align-items:stretch;border-radius:16px;border:1.5px solid;overflow:hidden;
+  box-shadow:var(--shadow);transition:transform 0.15s;}
+.exam-card:active{transform:scale(0.99);}
+
+/* color variants */
+.ec-organic {background:#fef9c3;border-color:#fde047;}
+.ec-dosage  {background:#fce7f3;border-color:#f9a8d4;}
+.ec-bio     {background:#dcfce7;border-color:#86efac;}
+.ec-micro   {background:#dbeafe;border-color:#93c5fd;}
+.ec-pharma  {background:#f3e8ff;border-color:#d8b4fe;}
+.ec-done    {background:#f0fdf4!important;border-color:#86efac!important;}
+
+/* left accent bar */
+.ec-accent{width:5px;flex-shrink:0;}
+.ec-organic .ec-accent{background:linear-gradient(180deg,#fde047,#ca8a04);}
+.ec-dosage  .ec-accent{background:linear-gradient(180deg,#f9a8d4,#ec4899);}
+.ec-bio     .ec-accent{background:linear-gradient(180deg,#6ee7b7,#059669);}
+.ec-micro   .ec-accent{background:linear-gradient(180deg,#93c5fd,#2563eb);}
+.ec-pharma  .ec-accent{background:linear-gradient(180deg,#d8b4fe,#9333ea);}
+.ec-done    .ec-accent{background:linear-gradient(180deg,#86efac,#4ade80)!important;}
+
+/* date block on the left */
+.ec-date{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:12px 10px 12px 14px;min-width:52px;flex-shrink:0;}
+.ec-d{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--pink-mid);line-height:1;}
+.ec-day{font-size:0.6rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+
+/* middle: icon + subject name */
+.ec-mid{flex:1;display:flex;align-items:center;gap:8px;padding:12px 8px;}
+.ec-icon{font-size:1.3rem;flex-shrink:0;}
+.ec-name{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--text);}
+
+/* right: countdown pill */
+.ec-right{display:flex;align-items:center;padding-right:14px;flex-shrink:0;}
+.ec-pill{display:inline-flex;align-items:center;justify-content:center;
+  padding:5px 13px;border-radius:99px;font-size:0.7rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;border:1.5px solid;white-space:nowrap;}
+.ec-pill.neutral{background:rgba(255,255,255,0.85);border-color:rgba(0,0,0,0.1);color:var(--muted);}
+.ec-pill.soon   {background:#fce7f3;border-color:var(--pink-dim);color:var(--pink-mid);}
+.ec-pill.today-x{background:var(--pink-mid);border-color:var(--pink-mid);color:#fff;animation:pulse 1.4s ease-in-out infinite;}
+.ec-pill.passed {background:#dcfce7;border-color:#86efac;color:#16a34a;}
+
+/* schedule */
+.sched-row{display:flex;align-items:center;gap:12px;padding:11px 14px;
+  background:var(--offwhite);border:1px solid var(--pink-lt);border-radius:12px;margin-bottom:8px;}
+.sched-blob{width:38px;height:38px;border-radius:10px;
+  background:linear-gradient(135deg,#fce7f3,#fbcfe8);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.sched-time{font-weight:600;font-size:0.88rem;color:var(--text);}
+.sched-desc{font-size:0.74rem;color:var(--muted);margin-top:1px;}
+.quote-box{margin-top:16px;padding:16px 18px;
+  background:linear-gradient(135deg,#fdf2f8,#fce7f3);
+  border-radius:14px;border:1px solid var(--pink-dim);position:relative;overflow:hidden;}
+.quote-box::before{content:'\201C';position:absolute;top:-10px;left:10px;
+  font-family:'Playfair Display',serif;font-size:5rem;color:rgba(244,114,182,0.12);line-height:1;}
+.quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:0.95rem;line-height:1.7;color:#4a1942;}
+.quote-sig{margin-top:8px;font-size:0.73rem;color:var(--pink-mid);font-weight:600;}
+
+/* progress */
+.progress-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px;}
+.progress-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--pink-mid);line-height:1;}
+.progress-num sup{font-size:0.95rem;color:var(--muted);}
+.bar-track{height:10px;background:var(--pink-lt);border-radius:99px;overflow:hidden;margin-bottom:10px;}
+.bar-fill{height:100%;background:linear-gradient(90deg,#f9a8d4,#ec4899);border-radius:99px;transition:width 0.7s cubic-bezier(.4,0,.2,1);}
+.badges{display:flex;gap:8px;flex-wrap:wrap;}
+.badge{padding:3px 11px;border-radius:99px;font-size:0.72rem;font-weight:500;}
+.badge-done{background:#fce7f3;color:#be185d;border:1px solid #fbcfe8;}
+.badge-left{background:#fff;color:var(--muted);border:1px solid var(--border);}
+
+/* ── DAY ROW (merged) ── */
+.day-row{border-radius:16px;border:1.5px solid;overflow:hidden;margin-bottom:10px;cursor:pointer;
+  transition:transform 0.15s,box-shadow 0.15s;}
+.day-row:active{transform:scale(0.99);}
+.day-row.todo      {background:#fff;border-color:rgba(244,114,182,0.3);}
+.day-row.type-exam {background:#fff1f2;border-color:#fda4af;}
+.day-row.type-review{background:#fefce8;border-color:#fde047;}
+.day-row.type-revision{background:#fdf4ff;border-color:#d8b4fe;}
+.day-row.type-crunch{background:#fff7ed;border-color:#fdba74;}
+.day-row.done-all  {background:#f0fdf4!important;border-color:#86efac!important;}
+.day-row.is-today  {box-shadow:0 0 0 2.5px var(--pink-mid),0 6px 24px rgba(244,114,182,0.25)!important;}
+
+.day-top{display:flex;align-items:center;gap:0;}
+.day-accent{width:4px;align-self:stretch;flex-shrink:0;background:linear-gradient(180deg,#f9a8d4,#ec4899);}
+.day-row.type-exam     .day-accent{background:linear-gradient(180deg,#fda4af,#e11d48);}
+.day-row.type-review   .day-accent{background:linear-gradient(180deg,#fde047,#ca8a04);}
+.day-row.type-revision .day-accent{background:linear-gradient(180deg,#d8b4fe,#9333ea);}
+.day-row.type-crunch   .day-accent{background:linear-gradient(180deg,#fdba74,#f97316);}
+.day-row.done-all      .day-accent{background:linear-gradient(180deg,#86efac,#4ade80);}
+
+.day-body{flex:1;padding:11px 12px;display:flex;align-items:flex-start;gap:10px;min-width:0;overflow:hidden;}
+.day-date-col{display:flex;flex-direction:column;min-width:52px;flex-shrink:0;padding-top:2px;}
+.day-date{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--pink-mid);line-height:1;}
+.day-day {font-size:0.62rem;font-weight:500;letter-spacing:0.06em;color:var(--muted);margin-top:2px;text-transform:uppercase;}
+
+.day-content{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0;overflow:hidden;}
+.day-badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:2px;}
+
+/* subject block inside a merged day */
+.subj-block{display:flex;flex-direction:column;gap:4px;}
+.subj-block-label{display:flex;align-items:center;gap:5px;font-size:0.68rem;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.subj-block-sep{flex:1;height:1px;background:var(--border);}
+.pills-row{display:flex;flex-wrap:wrap;gap:5px;min-width:0;}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;
+  border-radius:99px;font-size:0.73rem;font-weight:500;border:1px solid;white-space:nowrap;}
+.pill-organic {background:#fef9ec;border-color:#f6d860;color:#7a5c00;}
+.pill-dosage  {background:#fff0f6;border-color:#f9a8d4;color:#9d174d;}
+.pill-bio     {background:#f0fdf4;border-color:#6ee7b7;color:#065f46;}
+.pill-micro   {background:#eff6ff;border-color:#93c5fd;color:#1e40af;}
+.pill-pharma  {background:#fdf4ff;border-color:#c084fc;color:#6b21a8;}
+.pill-green   {background:#f0fdf4;border-color:#86efac;color:#166534;}
+.pill-exam-org{background:#fffbeb;border-color:#fde047;color:#92400e;}
+.pill-exam-dos{background:#fff0f6;border-color:#f9a8d4;color:#9d174d;}
+.pill-exam-bio{background:#f0fdf4;border-color:#6ee7b7;color:#065f46;}
+.pill-exam-mic{background:#eff6ff;border-color:#93c5fd;color:#1e40af;}
+.pill-exam-pha{background:#fdf4ff;border-color:#c084fc;color:#6b21a8;}
+
+.type-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 9px;
+  border-radius:99px;font-size:0.63rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;}
+.type-badge.crunch  {background:#fff7ed;border:1px solid #fed7aa;color:#c2410c;}
+.type-badge.revision{background:#fdf4ff;border:1px solid #d8b4fe;color:#7e22ce;}
+.type-badge.review  {background:#fefce8;border:1px solid #fde68a;color:#92400e;}
+.type-badge.exam    {background:#fff1f2;border:1px solid #fecdd3;color:#be123c;}
+.type-badge.today   {background:var(--pink-lt);border:1px solid var(--pink-dim);color:var(--pink-mid);}
+
+.check-btn{flex-shrink:0;width:32px;height:32px;border-radius:50%;border:2px solid;
+  background:transparent;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:0.9rem;transition:all 0.2s;margin-right:10px;margin-top:10px;align-self:flex-start;outline:none;}
+.check-btn:hover{transform:scale(1.15);}
+.day-row.todo     .check-btn{border-color:var(--pink-dim);color:var(--pink);}
+.day-row.done-all .check-btn{background:#dcfce7;border-color:#86efac;color:#16a34a;}
+
+/* motivational bubble */
+.motiv-bubble{display:none;padding:11px 15px;
+  background:linear-gradient(135deg,#fdf2f8,#fce7f3);
+  border:1px solid var(--pink-dim);border-top:none;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:0.85rem;line-height:1.65;color:#7c2d5e;}
+.motiv-bubble.visible{display:block;animation:fadeUp 0.3s ease both;}
+.motiv-sig{display:block;margin-top:6px;font-size:0.72rem;color:var(--pink-mid);font-style:normal;font-weight:600;}
+
+.today-dot{display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--pink-mid);animation:pulse 1.4s ease-in-out infinite;vertical-align:middle;margin-right:3px;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.5);}}
+
+.reset-wrap{text-align:center;margin-top:16px;}
+.reset-btn{border:1.5px solid var(--border);background:transparent;color:var(--muted);
+  font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;padding:10px 28px;
+  border-radius:99px;cursor:pointer;transition:all 0.2s;}
+.reset-btn:hover{background:var(--pink-lt);border-color:#f9a8d4;color:var(--pink-mid);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="header-icon">🌸</div>
+    <h1>Zainab's<br><em>Study Plan</em></h1>
+    <p class="tagline">Delta University · Pharmacy · 23 May → 17 June 2026</p>
+  </header>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-num">53</div><div class="stat-lbl">Lectures</div></div>
+    <div class="stat-box"><div class="stat-num">5</div><div class="stat-lbl">Exams</div></div>
+    <div class="stat-box"><div class="stat-num" id="pct-stat">0%</div><div class="stat-lbl">Progress</div></div>
+  </div>
+
+  <!-- EXAM SCHEDULE -->
+  <div class="card">
+    <div class="card-label">🎓 Exam Schedule</div>
+    <div class="exam-grid" id="exam-schedule"></div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="card">
+    <div class="card-label">📊 Progress</div>
+    <div class="progress-top">
+      <div class="progress-num" id="pct">0<sup>%</sup></div>
+      <div style="font-size:0.78rem;color:var(--muted)" id="days-label"></div>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+    <div class="badges">
+      <span class="badge badge-done" id="badge-done">0 Completed</span>
+      <span class="badge badge-left" id="badge-left">0 Remaining</span>
+    </div>
+  </div>
+
+  <!-- DAILY SCHEDULE -->
+  <div class="card">
+    <div class="card-label">⏰ Daily Schedule</div>
+    <div class="sched-row">
+      <div class="sched-blob">☀️</div>
+      <div><div class="sched-time">10:00 AM – 1:00 PM</div><div class="sched-desc">Morning · Lectures 1 &amp; 2</div></div>
+    </div>
+    <div class="sched-row">
+      <div class="sched-blob">🌤️</div>
+      <div><div class="sched-time">4:00 PM – 7:00 PM</div><div class="sched-desc">Afternoon · Lectures 3 &amp; 4</div></div>
+    </div>
+    <div class="sched-row">
+      <div class="sched-blob">🌙</div>
+      <div><div class="sched-time">11:00 PM</div><div class="sched-desc">Daily Revision · Wind Down</div></div>
+    </div>
+    <div class="quote-box">
+      <p class="quote-text">Zeinab, I know how capable you are, and no matter how hard things get, I will always believe in you and stand by your side.</p>
+      <p class="quote-sig">— Sherif 💕</p>
+    </div>
+  </div>
+
+  <!-- FULL PLAN -->
+  <div class="card">
+    <div class="card-label">📅 Full Plan</div>
+    <div id="tasks"></div>
+    <div class="reset-wrap">
+      <button class="reset-btn" onclick="resetData()">↺ &nbsp;Reset All Progress</button>
+    </div>
+  </div>
+
+</div>
+<script>
+// ── DATA ──
+// Each entry = one calendar day; subjects array = blocks shown that day
+var PLAN = [
+  {date:'23/5', day:'Sat', subjects:[
+    {name:'Organic', icon:'⚗️', cls:'pill-organic', type:'study',
+     lecs:['Organic 1','Organic 2'],
+     motiv:'Day one and you showed up. That is the hardest part. Sherif is so proud of you right now.'},
+    {name:'Dosage', icon:'🧪', cls:'pill-dosage', type:'study',
+     lecs:['Dosage 1','Dosage 2'],
+     motiv:'Dosage starts on day one. Two subjects at once — you are already ahead of everyone.'},
+  ]},
+  {date:'24/5', day:'Sun', subjects:[
+    {name:'Organic', icon:'⚗️', cls:'pill-organic', type:'study',
+     lecs:['Organic 3','Organic 4'],
+     motiv:'Two days in a row. You are building something real. Keep this energy habibty.'},
+    {name:'Dosage', icon:'🧪', cls:'pill-dosage', type:'study',
+     lecs:['Dosage 3','Dosage 4'],
+     motiv:'Dosage is building nicely. Sherif believes in you.'},
+  ]},
+  {date:'25/5', day:'Mon', subjects:[
+    {name:'Organic', icon:'⚗️', cls:'pill-organic', type:'study',
+     lecs:['Organic 5','Organic 6'],
+     motiv:'Halfway through Organic. You are ahead of the game already.'},
+    {name:'Dosage', icon:'🧪', cls:'pill-dosage', type:'study',
+     lecs:['Dosage 5','Dosage 6'],
+     motiv:'Halfway through Dosage. You are unstoppable habibty.'},
+  ]},
+  {date:'26/5', day:'Tue', subjects:[
+    {name:'Organic', icon:'⚗️', cls:'pill-organic', type:'study',
+     lecs:['Organic 7','Organic 8'],
+     motiv:'Organic is almost done. You are carrying so much and making it look effortless.'},
+    {name:'Dosage', icon:'🧪', cls:'pill-dosage', type:'study',
+     lecs:['Dosage 7'],
+     motiv:'Almost done with Dosage. One more push tomorrow.'},
+  ]},
+  {date:'27/5', day:'Wed', subjects:[
+    {name:'Organic', icon:'⚗️', cls:'pill-organic', type:'study',
+     lecs:['Organic 9','Organic 10'],
+     motiv:'Organic complete ✅ Done before June even starts. You are extraordinary.'},
+    {name:'Dosage', icon:'🧪', cls:'pill-dosage', type:'study',
+     lecs:['Dosage 8','Dosage 9'],
+     motiv:'Dosage complete ✅ Two subjects done and June has not even started yet.'},
+  ]},
+  {date:'28/5', day:'Thu', subjects:[
+    {name:'Bio', icon:'🧬', cls:'pill-bio', type:'study',
+     lecs:['Bio 1','Bio 2'],
+     motiv:'Bio begins! Sherif is watching you build momentum day after day.'},
+  ]},
+  {date:'29/5', day:'Fri', subjects:[
+    {name:'Bio', icon:'🧬', cls:'pill-bio', type:'crunch',
+     lecs:['Bio 3','Bio 4','Bio 5','Bio 6'],
+     motiv:'Bio crunch day — four in one push. You are stronger than you think.'},
+  ]},
+  {date:'30/5', day:'Sat', subjects:[
+    {name:'Organic', icon:'⚗️', cls:'pill-organic', type:'revision',
+     lecs:['Organic — Revision'],
+     motiv:'Organic revision day. Everything is already in your head — today you just bring it to the surface.'},
+  ]},
+  {date:'31/5', day:'Sun', subjects:[
+    {name:'Organic', icon:'⚗️', cls:'pill-organic', type:'review',
+     lecs:['Organic — Review Session'],
+     motiv:'Walk in tomorrow and own every single question. Sherif will be thinking of you the whole time.'},
+  ]},
+  {date:'1/6', day:'Mon', subjects:[
+    {name:'Organic', icon:'⚗️', cls:'pill-organic', type:'exam',
+     lecs:['EXAM — Organic Chemistry'],
+     motiv:'This is your moment. Everything you studied is right there inside you. Go show them, Zeinab. 💪'},
+  ]},
+  {date:'2/6', day:'Tue', subjects:[
+    {name:'Dosage', icon:'🧪', cls:'pill-dosage', type:'review',
+     lecs:['Dosage — Review Session'],
+     motiv:'One exam down! Dosage gets your full attention today. You finished it days ago — today is just reminding yourself.'},
+  ]},
+  {date:'3/6', day:'Wed', subjects:[
+    {name:'Dosage', icon:'🧪', cls:'pill-dosage', type:'exam',
+     lecs:['EXAM — Dosage Forms'],
+     motiv:'Two exams in a row and you are handling it like a pro. Sherif believes in you completely.'},
+  ]},
+  {date:'4/6', day:'Thu', subjects:[
+    {name:'Bio', icon:'🧬', cls:'pill-bio', type:'crunch',
+     lecs:['Bio 7','Bio 8','Bio 9','Bio 10'],
+     motiv:'Bio crunch finale — finish it today! Bio complete ✅ You are racing through this season.'},
+  ]},
+  {date:'5/6', day:'Fri', subjects:[
+    {name:'Bio', icon:'🧬', cls:'pill-bio', type:'revision',
+     lecs:['Bio — Revision'],
+     motiv:'Bio revision day. A whole subject sitting in your memory waiting to shine. Go get it habibty.'},
+  ]},
+  {date:'6/6', day:'Sat', subjects:[
+    {name:'Bio', icon:'🧬', cls:'pill-bio', type:'review',
+     lecs:['Bio — Review Session'],
+     
